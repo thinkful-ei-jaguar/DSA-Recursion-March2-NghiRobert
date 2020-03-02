@@ -92,6 +92,7 @@ function Factorial(num) {
 
 function solvingMaze(maze, x, y) {
   let action = "";
+  let allactions = [];
   let currentPos = [x, y];
   // Base
   if (maze[x][y] === "e") {
@@ -118,7 +119,16 @@ function solvingMaze(maze, x, y) {
     action = "L";
     currentPos = [x, y - 1];
   }
-  return action + solvingMaze(maze, currentPos[0], currentPos[1]);
+  else if(maze[x - 1] !== undefined) {
+    if (
+      (maze[x - 1][y] === " " || maze[x - 1][y] === "e") &&
+      maze[x - 1][y] !== undefined
+    ) {
+      action = "U";
+      currentPos = [x - 1, y];
+    }
+  }
+  return allactions.push(action + solvingMaze(maze, currentPos[0], currentPos[1]));
 }
 
 let mySmallMaze = [
@@ -158,3 +168,23 @@ function binaryRep(num) {
   const binary = Math.floor(num % 2); // 1
   return binaryRep(Math.floor(num / 2)) + binary;
 }
+
+function Anagrams(word,i=0){
+  i=word.length-1;
+  if(i<0){
+    return ""
+  }
+  let prefix = word.splice(0,1);
+  let letters =word.splice(1);
+  
+
+
+
+  return Anagrams(letters+prefix,i)
+}
+
+//ate
+//tea
+//eta
+
+
