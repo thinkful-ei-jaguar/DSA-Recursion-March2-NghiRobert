@@ -93,32 +93,31 @@ function Factorial(num) {
 function solvingMaze(maze, x, y) {
   let action = "";
   let currentPos = [x, y];
-  const row = maze[x].length;
-  const column = maze.length;
-  //return maze[1][3] === undefined;
-
+  // Base
   if (maze[x][y] === "e") {
-    return action;
+    return "";
   }
-  // Same Row
-  if (maze[x][y++] === " " && maze[x][y++] !== undefined) {
-    console.log("Running");
+  if (
+    (maze[x][y + 1] === " " || maze[x][y + 1] === "e") &&
+    maze[x][y + 1] !== undefined
+  ) {
     action = "R";
-    currentPos = [x, y++];
-  } else if (maze[x][y--] === " " && maze[x][y--] !== undefined) {
-    console.log("Left");
+    currentPos = [x, y + 1];
+  } else if (maze[x + 1] !== undefined) {
+    if (
+      (maze[x + 1][y] === " " || maze[x + 1][y] === "e") &&
+      maze[x + 1][y] !== undefined
+    ) {
+      action = "D";
+      currentPos = [x + 1, y];
+    }
+  } else if (
+    (maze[x][y - 1] === " " || maze[x][y - 1] === "e") &&
+    maze[x][y - 1] !== undefined
+  ) {
     action = "L";
-    currentPos = [x, y--];
+    currentPos = [x, y - 1];
   }
-  // Diff Row
-  else if (maze[x++][y] === " " && maze[x++][y] !== undefined) {
-    console.log("Down");
-    action = "D";
-    currentPos = [x++, y];
-  }
-  // console.log("action:", action);
-  // console.log("position:", currentPos);
-  console.log(currentPos);
   return action + solvingMaze(maze, currentPos[0], currentPos[1]);
 }
 
@@ -134,8 +133,6 @@ let mySmallMaze = [
 // 1,2 - D
 // 2,2 - D
 
-console.log(solvingMaze(mySmallMaze, 0, 0));
-
 let maze = [
   [" ", " ", " ", "*", " ", " ", " "],
   ["*", "*", " ", "*", " ", "*", " "],
@@ -143,7 +140,9 @@ let maze = [
   [" ", "*", "*", "*", "*", "*", " "],
   [" ", " ", " ", " ", " ", " ", "e"]
 ];
-// RRDDRRRRD
+// RRDDRRRRDD
+
+console.log(solvingMaze(maze, 0, 0));
 
 // Step 1: Input/Output
 //          25 : 10011
